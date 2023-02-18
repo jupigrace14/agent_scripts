@@ -2,16 +2,16 @@
 Author: Jupiter
 Description script to install Jenkins on ubuntu server
 Date: Feb 18 2023
-# this script is only tested on ubuntu xenial
 
-# install docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-apt-get update
-apt-get install docker-ce docker-ce-cli containerd.io
-systemctl enable docker
-systemctl start docker
-usermod -aG docker ubuntu
+
+sudo apt-get update
+sudo apt-get install default-jdk
+wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+
+sudo apt-get install jenkins
+sudo systemctl start jenkins
+
+sudo systemctl status jenkins
